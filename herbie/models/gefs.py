@@ -30,27 +30,29 @@ class gefs:
             # Just select the first PRODUCT as default
             self.product = list(self.PRODUCTS)[0]
 
-        if self.date:%Y%m%d/%H < 20200923:
+        date_int = int(self.date.strftime("%Y%m%d%H"))
+
+        if date_int < 20200923:
             if self.product == "wave":
                 raise ValueError(
-                    f"Dates before 2020-09-23 do not have wave producs :( }"
+                    f"Dates before 2020-09-23 do not have wave producs :("
                 )
             if self.product == "atmos.25":
                 raise ValueError(
-                    f"Dates before 2020-09-23 do not have atmos.25 producs :( }"
+                    f"Dates before 2020-09-23 do not have atmos.25 producs :("
                 )
             if self.product.startswith("chem"):
                 raise ValueError(
-                    f"Dates before 2020-09-23 do not have chem producs :( }"
+                    f"Dates before 2020-09-23 do not have chem producs :("
                 )
             if self.product.startswith("atmos"):
                 if self.member == "spread":
                     raise ValueError(
-                        f"Dates before 2020-09-23 do not have spread member :( }"
+                        f"Dates before 2020-09-23 do not have spread member :("
                     )
                 elif self.member == "mean":
                     raise ValueError(
-                        f"Dates before 2020-09-23 do not have mean member :( }"
+                        f"Dates before 2020-09-23 do not have mean member :("
                     )
         else:
             if self.product == "wave":
@@ -70,12 +72,12 @@ class gefs:
             self.member = f"p{self.member:02d}"
 
         filedir = f"gefs.{self.date:%Y%m%d/%H}"
-        if self.date:%Y%m%d/%H < 20180727:
+        if date_int < 20180727:
             filepaths = {
                 "atmos.5": f"{filedir}/ge{self.member}.t{self.date:%H}z.pgrb2af{self.fxx:03d}",
                 "atmos.5b": f"{filedir}/ge{self.member}.t{self.date:%H}z.pgrb2bf{self.fxx:03d}",
             }
-        elif self.date:%Y%m%d/%H < 20200923:
+        elif date_int < 20200923:
             filepaths = {
                 "atmos.5": f"{filedir}/pgrb2a/ge{self.member}.t{self.date:%H}z.pgrb2af{self.fxx:03d}",
                 "atmos.5b": f"{filedir}/pgrb2b/ge{self.member}.t{self.date:%H}z.pgrb2bf{self.fxx:03d}",
